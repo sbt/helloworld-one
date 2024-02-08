@@ -37,7 +37,7 @@ jobs:
             # set these appropriately for your project - the defaults are shown here for context
             spotbugs_target: 'target' # cannot have globs
             # spotbugs_filename_glob: '*.jar'
-            # upload_sarif: 'true'
+            upload_sarif: 'true'
             # no_cache: 'false'
             # spotbugs_version: '4.7.3'
             # findsecbugs_version: '1.12.0'
