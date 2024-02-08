@@ -6,9 +6,9 @@ name: SpotBugs with FindSecBugs
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
 jobs:
     spotbugs:
