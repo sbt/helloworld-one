@@ -1,0 +1,45 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: SpotBugs with FindSecBugs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+    spotbugs:
+      runs-on: ubuntu-latest
+      permissions:
+        actions: read
+        contents: read
+        security-events: write
+        
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        # this needs to be appropriately configured for your project
+        - name: Setup Java
+          uses: actions/setup-java@v3
+          with:
+            distribution: 'microsoft'
+            java-version: 11
+        # do your build steps. This example uses sbt to create a .jar file, which will go into the target/scala-2.13 folder
+        - name: Publish locally with sbt
+          run: sbt publishLocal
+        # now run SpotBugs and upload the results to Code Scanning
+        - name: Run SpotBugs with FindSecBugs
+          uses: advanced-security/spotbugs-findsecbugs-action@v1
+          with:
+            # set these appropriately for your project - the defaults are shown here for context
+            spotbugs_target: 'target/scala-2.12.2' # cannot have globs
+            # spotbugs_filename_glob: '*.jar'
+            # upload_sarif: 'true'
+            # no_cache: 'false'
+            # spotbugs_version: '4.7.3'
+            # findsecbugs_version: '1.12.0'
+            # java_distribution: 'microsoft'
+            # java_version: '11'
